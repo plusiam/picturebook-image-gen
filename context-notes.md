@@ -44,8 +44,12 @@
 ### 4. 캐싱
 - 캐시 키 = `프롬프트 + 참조이미지 해시 + 모델`. 재생성은 캐시 우회.
 
-## 실호출 검증 시 주의 (advisor 검토 반영, 미검증 항목)
-- **엔드포인트 버전**: 현재 `v1beta`로 설정. 이미지 출력이 안 되면 `v1`로 교체해 실측. (둘 다 시도)
+## 실호출 검증 시 주의 (advisor 검토 반영)
+- **엔드포인트 버전: `v1beta` 확정 (2026-06-01 실측)** — v1은 `responseModalities`를 모름(400 Unknown name).
+  v1beta는 요청 형태 통과(권한 단계까지 도달). Code.gs는 v1beta 유지. ✅
+- **키 보안 주의**: 실측 중 한 키가 구글에 의해 `PERMISSION_DENIED: blocked for security`로 차단됨
+  (= 공개 노출 자동 감지). 새 키는 GAS Script Properties / 로컬 env에만, 채팅·커밋 금지.
+  우리 repo는 키 패턴 스캔·gitignore로 클린 확인됨(노출원은 외부).
 - **responseFormat(화면비)**: 필드 형태 미검증이라 **기본 비활성**(`config.USE_ASPECT_RATIO=false`).
   첫 실호출은 `contents` + `responseModalities:["TEXT","IMAGE"]`만으로(최소 안전형) → 이미지 받으면 화면비 켜고 필드명 재확인.
   → 이 두 개가 틀리면 **실생성 100% 400 에러**. 교사 첫 실키 시도 전 반드시 확인.
