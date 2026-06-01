@@ -57,8 +57,24 @@
 - ✅ 검증(DEMO): 업로드→파싱→분석→렌더→캐시→게이트 UI→내보내기(ZIP/PDF 로드)→모바일 375px→편집 보존.
 - ❌ 미검증(실키 필요): 실제 이미지 생성, 캐릭터 일관성, CORS 왕복, 무료 티어 가능 여부. → Phase 0 차단 3종.
 
+## 실제 스키마 확정 (schemaVersion 2, 2026-06-01)
+실제 export 파일(성시온/마음을 요리하는 식당)로 매핑 검증 완료. 핵심 구조:
+- `student.title`=제목, `student.name`=작가, `student.protagonist`=주인공("배릴")
+- `student.learnerProfiles`=IB 학습자상(교육 맥락)
+- `pages[]`: `page`(번호) · `type`(cover/start/middle/climax/end) · `label`(표지/시작/중간/빛나는 순간/끝)
+  · `text`(본문 내레이션) · `drawing`(학생 직접 그린 base64 dataURL, **null 가능**) · `prompt`/`guide`(스캐폴드, 무시)
+- `_ps`(병렬/이전 상태) 무시. **`totalPages`(12)는 부정확 → 배열 길이(11) 사용**.
+- 페이지엔 `scene`/`characters` 필드 없음 → 매핑: narration=text, setting='', characters=[주인공] 기본 투입.
+- 학생 그림(11쪽 중 3쪽)은 썸네일 표시 + 교사가 '주인공 기준으로 지정' 클릭 시에만 참조 이미지화(자동 아님).
+- 주인공 외형 설명 기본값 = 표지 본문 첫 문장(매 프롬프트에 실려 일관성↑).
+
+### 🔒 개인정보 (중요)
+- 실제 export엔 학생 실명·반·직접 그린 그림 포함 → **공개 저장소에 절대 커밋 금지**.
+- `.gitignore`에 `samples/*`(익명 sample-story.json만 예외)·`스토리보드_*.json`·`*_260*.json` 가드 추가.
+- 커밋된 sample-story.json은 **완전 새 가상 동화**(씨앗을 심는 로봇/토리, 작가 OOO) — 아이 창작물 미재사용.
+
 ## 미해결 / 다음 세션 할 일
-- [ ] 실제 export JSON으로 `js/parse.js` 정규화 매핑 교체.
+- [x] 실제 export JSON으로 `js/parse.js` 정규화 매핑 교체(schemaVersion 2 확정).
 - [ ] GAS URL을 `js/config.js`에 입력 후 실키 end-to-end 테스트.
 - [ ] 기준 이미지 Drive 저장 전환(현재 base64 round-trip → 크기 한계 있음).
 - [ ] 동시 부하 실측 → 필요 시 Workers 전환 판단.

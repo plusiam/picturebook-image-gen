@@ -11,3 +11,10 @@ Thumbs.db
 # 로컬 비밀(혹시 모를 유출 방지 — 키는 절대 커밋 금지)
 .env
 .env.*
+
+# 학생 실데이터 보호 — samples/ 에는 익명 예시(sample-story.json)만 커밋.
+# 실제 export(학생 이름·반·그림 포함)는 절대 커밋 금지(개인정보).
+samples/*
+!samples/sample-story.json
+스토리보드_*.json
+*_260*.json

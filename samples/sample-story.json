@@ -1,27 +1,66 @@
 {
-  "title": "용감한 토끼",
-  "author": "3학년 김OO",
+  "schemaVersion": 2,
+  "meta": {
+    "school": "",
+    "grade": "",
+    "subject": "",
+    "unit": "그림책 프로젝트 (예시)",
+    "totalPages": 4,
+    "exportDate": "2026-06-01T00:00:00.000Z"
+  },
+  "student": {
+    "class": "예시",
+    "name": "OOO",
+    "title": "씨앗을 심는 작은 로봇",
+    "protagonist": "토리",
+    "learnerProfiles": ["배려하는 사람"],
+    "learnerProfilePrimary": "배려하는 사람"
+  },
   "pages": [
     {
-      "index": 1,
-      "text": "토끼가 깜깜한 숲으로 들어갔어요.",
-      "scene": "밤의 숲",
-      "characters": ["토끼"],
-      "note": "무서운 분위기"
+      "page": 1,
+      "id": "s1",
+      "type": "cover",
+      "label": "표지",
+      "prompt": "제목 + 주인공",
+      "guide": "제목을 크게 쓰고, 주인공을 그려요",
+      "text": "토리는 마른 들판을 다시 푸르게 만들고 싶은 작은 로봇이에요. 가슴에는 따뜻한 초록색 불빛이 켜져 있어요.",
+      "drawing": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='120'%20height='120'%3E%3Crect%20width='120'%20height='120'%20fill='%23eaf6ec'/%3E%3Ccircle%20cx='60'%20cy='55'%20r='28'%20fill='%23a7d8b0'/%3E%3Crect%20x='52'%20y='80'%20width='16'%20height='20'%20fill='%237bbf8a'/%3E%3Ctext%20x='60'%20y='115'%20font-size='12'%20text-anchor='middle'%20fill='%233a6b45'%3E토리%3C/text%3E%3C/svg%3E"
     },
     {
-      "index": 2,
-      "text": "토끼는 길을 잃은 아기 새를 만났어요.",
-      "scene": "큰 나무 아래",
-      "characters": ["토끼", "아기 새"],
-      "note": "걱정스러운 표정"
+      "page": 2,
+      "id": "s2",
+      "type": "start",
+      "label": "시작",
+      "prompt": "어느 날...",
+      "guide": "주인공을 소개해요",
+      "text": "어느 날 토리는 메마른 언덕에서 단 하나 남은 씨앗을 발견했어요. \"이 작은 씨앗을 꼭 살려야지!\" 토리는 다짐했어요.",
+      "drawing": null
     },
     {
-      "index": 3,
-      "text": "토끼와 아기 새는 손을 잡고 둥지를 찾아 떠났어요.",
-      "scene": "달빛 비치는 오솔길",
-      "characters": ["토끼", "아기 새"],
-      "note": "따뜻하고 희망찬 분위기"
+      "page": 3,
+      "id": "s3",
+      "type": "middle",
+      "label": "중간",
+      "prompt": "그런데...",
+      "guide": "어려움이 생겨요",
+      "text": "하지만 비가 오지 않아 땅이 딱딱했어요. 토리는 밤새 작은 물통으로 물을 길어다 부었어요.",
+      "drawing": null
+    },
+    {
+      "page": 4,
+      "id": "s4",
+      "type": "end",
+      "label": "끝",
+      "prompt": "마침내...",
+      "guide": "이야기를 마무리해요",
+      "text": "마침내 씨앗에서 초록 싹이 돋았어요. 토리의 가슴 불빛이 더 밝게 빛났어요. 언덕은 다시 초록빛으로 가득해졌답니다.",
+      "drawing": null
     }
-  ]
+  ],
+  "author": {
+    "name": "OOO",
+    "message": "토리처럼 작은 일도 끝까지 해내는 사람이 되고 싶어요.",
+    "dedicationTo": "동생에게"
+  }
 }

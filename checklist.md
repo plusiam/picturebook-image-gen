@@ -2,7 +2,7 @@
 # 체크리스트 — picturebook-image-gen
 
 ## Phase 0. 기반 (착수 차단 요소)
-- [ ] 실제 스토리보드 export JSON 1개 확보 → 스키마 확정 (현재 *예상* 스키마로 방어적 파서 작성)
+- [x] 실제 스토리보드 export JSON(schemaVersion 2) 확보 → **스키마 확정** (parse.js 실파일 검증 완료)
 - [ ] 교사 키로 `gemini-2.5-flash-image` 이미지 출력이 **무료 티어로 되는지** 확인 (과금 시 가성비 재검토)
 - [ ] GAS 웹앱 배포 → `https://plusiam.github.io` → GAS CORS 왕복(text/plain 단순 요청) 증명
 - [x] repo 골격 (index/css/js/gas/samples)

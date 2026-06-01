@@ -4,10 +4,17 @@
 //   (GAS POST 본문 크기 한계 때문 — context-notes.md 참고).
 
 // 스토리에서 모든 등장인물 키를 모아 CharacterRef[] 초기화
+// 주인공은 항상 포함하고, 표지 본문 첫 문장을 외형 설명 기본값으로 시드(매 프롬프트에 실려 일관성↑).
+// ※ 기준 이미지는 자동 지정하지 않는다 — 교사가 학생 그림을 보고 직접 '기준으로 지정'(채택 철학).
 function extractCharacters(story) {
   const set = new Set();
   story.pages.forEach(p => (p.characters || []).forEach(k => set.add(k)));
-  return Array.from(set).map(key => ({ key: key, description: '', refImageBase64: '' }));
+  if (story.protagonist) set.add(story.protagonist);
+  return Array.from(set).map(key => ({
+    key: key,
+    description: (key === story.protagonist) ? (story.protagonistHint || '') : '',
+    refImageBase64: ''
+  }));
 }
 
 // 특정 페이지에 등장하는 캐릭터의 기준 이미지 base64 배열 반환(참조 투입용)

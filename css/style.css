@@ -54,7 +54,10 @@ textarea { resize: vertical; }
 
 .pages { display: flex; flex-direction: column; gap: 14px; }
 .page-card { display: grid; grid-template-columns: 36px 1fr 220px; gap: 12px; border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
-.page-no { width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+.page-no { width: 30px; min-height: 30px; border-radius: 14px; background: var(--accent); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold; padding: 4px 0; gap: 2px; }
+.page-label { font-size: 9px; font-weight: normal; opacity: .9; writing-mode: horizontal-tb; white-space: nowrap; }
+.student-draw { display: flex; align-items: center; gap: 8px; margin: 6px 0; padding: 6px; background: #fffaf4; border: 1px dashed var(--line); border-radius: 8px; }
+.student-draw img { width: 64px; height: 64px; object-fit: contain; background: #fff; border-radius: 6px; }
 .narration { margin: 0 0 8px; font-size: 14px; }
 .page-actions { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
 .page-image { display: flex; flex-direction: column; gap: 6px; align-items: center; justify-content: center; background: #fffdfb; border: 1px solid var(--line); border-radius: 10px; padding: 6px; }

@@ -59,9 +59,12 @@ function renderCharacters() {
       <div class="char-ref ${c.refImageBase64 ? 'has' : ''}">
         ${c.refImageBase64 ? `<img src="${c.refImageBase64}" alt="기준 이미지">` : '<span>기준 이미지 없음</span>'}
       </div>
-      <label class="btn small">기준 이미지 올리기
-        <input type="file" accept="image/*" hidden class="char-file">
-      </label>`;
+      <div class="row">
+        <label class="btn small">기준 이미지 올리기
+          <input type="file" accept="image/*" hidden class="char-file">
+        </label>
+        ${c.refImageBase64 ? '<button class="btn small ghost char-clear">기준 제거</button>' : ''}
+      </div>`;
     card.querySelector('.char-desc').addEventListener('input', e => { c.description = e.target.value; });
     card.querySelector('.char-file').addEventListener('change', async e => {
       const f = e.target.files[0]; if (!f) return;
@@ -70,6 +73,8 @@ function renderCharacters() {
       c.refImageBase64 = await Characters.fileToDataUrl(f);
       renderCharacters();
     });
+    const clr = card.querySelector('.char-clear');
+    if (clr) clr.addEventListener('click', () => { c.refImageBase64 = ''; renderCharacters(); });
     wrap.appendChild(card);
   });
 }
@@ -79,10 +84,16 @@ function renderPages() {
   state.story.pages.forEach(p => {
     const r = Gallery.getResult(p.index);
     const card = el('div', 'page-card');
+    const drawing = p.studentDrawing
+      ? `<div class="student-draw">
+           <img src="${p.studentDrawing}" alt="학생 그림 ${p.index}">
+           <button class="btn small promote">🧸 주인공 기준으로</button>
+         </div>` : '';
     card.innerHTML = `
-      <div class="page-no">${p.index}</div>
+      <div class="page-no">${p.index}${p.label ? `<span class="page-label">${esc(p.label)}</span>` : ''}</div>
       <div class="page-body">
         <p class="narration">${esc(p.narration)}</p>
+        ${drawing}
         <textarea class="prompt" rows="3">${esc(p.userPrompt)}</textarea>
         <div class="page-actions">
           <button class="btn gen">🎨 생성</button>
@@ -102,6 +113,15 @@ function renderPages() {
     card.querySelector('.regen').addEventListener('click', () => genPage(p, true));
     const ap = card.querySelector('.approve');
     if (ap) ap.addEventListener('click', () => { Gallery.approve(p.index); renderPages(); toast(`${p.index}페이지 채택`, 'ok'); });
+    // 학생 그림을 주인공 기준 이미지로 지정(교사가 직접 선택 — 자동 아님)
+    const promote = card.querySelector('.promote');
+    if (promote) promote.addEventListener('click', () => {
+      const proto = state.characters.find(c => c.key === state.story.protagonist) || state.characters[0];
+      if (!proto) return toast('지정할 주인공이 없습니다.', 'err');
+      proto.refImageBase64 = p.studentDrawing;
+      renderCharacters();
+      toast(`${p.index}페이지 그림을 '${proto.key}' 기준으로 지정했어요(표지엔 글자가 있을 수 있어요).`, 'ok');
+    });
     wrap.appendChild(card);
   });
 }

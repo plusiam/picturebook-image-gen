@@ -28,19 +28,41 @@ function hasBlocked(text) {
   return list.some(w => cleaned.includes(w));
 }
 
+// 본문에서 큰따옴표 대사를 제거하고 장면 묘사만 남긴다(이미지 프롬프트용)
+function sceneText(narration) {
+  return String(narration || '')
+    .replace(/[""][^""]*[""]/g, '')   // 곡선 따옴표 대사 제거
+    .replace(/"[^"]*"/g, '')           // 직선 따옴표 대사 제거
+    .replace(/\s+/g, ' ').trim()
+    .slice(0, 140);                    // 과도하게 길면 절단
+}
+
 // 페이지 + 공통조건 → 자동 프롬프트 문자열 조립
 function buildPrompt(page, conds) {
   const c = conds || window.APP_CONFIG.DEFAULTS;
   const charPart = (page.characters || []).join(', ');
+  const safety = window.APP_CONFIG.SAFETY_SUFFIX;
+
+  // 표지는 장면이 아니라 "제목 + 주인공" 중심으로
+  if (page.type === 'cover') {
+    return [
+      c.style, '그림책 표지(제목을 넣을 여백 포함)',
+      charPart && ('주인공: ' + charPart),
+      c.palette && ('색감: ' + c.palette),
+      safety
+    ].filter(Boolean).join(', ');
+  }
+
+  const scene = sceneText(page.narration);
   const segs = [
     c.style,
-    page.setting && ('배경: ' + page.setting),
     charPart && ('등장인물: ' + charPart),
-    page.action && ('행동: ' + page.action),
+    page.setting && ('배경: ' + page.setting),
+    scene && ('장면: ' + scene),
     ('분위기: ' + (page.mood || '다정한')),
     c.palette && ('색감: ' + c.palette),
     c.tone && ('톤: ' + c.tone),
-    window.APP_CONFIG.SAFETY_SUFFIX
+    safety
   ].filter(Boolean);
   return segs.join(', ');
 }
