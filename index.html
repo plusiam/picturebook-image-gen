@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!-- 학생 그림책 작가 — 장면 이미지 생성기 단일 화면 앱 -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>그림책 이미지 생성기 — 룰루랄라 한기쌤</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>🎨 그림책 이미지 생성기</h1>
+    <span id="mode-badge" class="badge">DEMO</span>
+  </header>
+
+  <main class="container">
+    <!-- 1) 업로드 -->
+    <section class="card">
+      <h2>1. 이야기 불러오기</h2>
+      <p class="hint">스토리보드 도구에서 내보낸 <b>JSON</b>을 올리세요.</p>
+      <div class="row">
+        <label class="btn">📂 JSON 올리기<input id="file-input" type="file" accept=".json,application/json" hidden></label>
+        <button id="load-sample" class="btn ghost">샘플로 체험</button>
+      </div>
+      <div class="settings">
+        <label>반 코드 <input id="class-code" type="text" placeholder="교사에게 받은 코드" maxlength="20"></label>
+      </div>
+    </section>
+
+    <div id="workspace" hidden>
+      <div class="bookhead">
+        <h2 id="book-title"></h2><span id="book-author" class="muted"></span>
+      </div>
+
+      <!-- 2) 공통 조건 -->
+      <section class="card">
+        <h2>2. 공통 그림 조건</h2>
+        <div class="conds">
+          <label>그림체 <input id="cond-style" type="text"></label>
+          <label>화면비
+            <select id="cond-aspect">
+              <option value="4:3">4:3</option>
+              <option value="16:9">16:9</option>
+              <option value="1:1">1:1</option>
+              <option value="3:4">3:4(세로)</option>
+            </select>
+          </label>
+          <label>색감 <input id="cond-palette" type="text"></label>
+          <label>톤 <input id="cond-tone" type="text"></label>
+        </div>
+      </section>
+
+      <!-- 3) 캐릭터 시트 -->
+      <section class="card">
+        <h2>3. 캐릭터 시트 <small class="muted">(같은 모습 유지의 핵심)</small></h2>
+        <p class="hint">⚠️ 아동 실물 사진 금지 — <b>직접 그린 그림이나 생성 이미지</b>만 기준으로 올려요.</p>
+        <div id="characters" class="grid"></div>
+      </section>
+
+      <!-- 4) 페이지 -->
+      <section class="card">
+        <div class="row between">
+          <h2>4. 페이지별 생성</h2>
+          <button id="gen-all" class="btn">📖 전체 생성</button>
+        </div>
+        <div id="progress" class="progress" hidden>
+          <div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
+          <span id="progress-text"></span>
+        </div>
+        <div id="pages" class="pages"></div>
+      </section>
+
+      <!-- 5) 내보내기 -->
+      <section class="card">
+        <h2>5. 내보내기</h2>
+        <label class="check"><input id="export-approved" type="checkbox"> 채택된 페이지만</label>
+        <div class="row">
+          <button id="export-zip" class="btn">🗂 ZIP</button>
+          <button id="export-pdf" class="btn">📄 PDF</button>
+        </div>
+        <p class="hint">생성 이미지에는 AI 워터마크(SynthID)가 포함됩니다. AI로 만든 그림임을 안내해 주세요.</p>
+      </section>
+    </div>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <!-- 내보내기 라이브러리(CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <!-- 앱 모듈 -->
+  <script src="./js/config.js"></script>
+  <script src="./js/parse.js"></script>
+  <script src="./js/analyze.js"></script>
+  <script src="./js/characters.js"></script>
+  <script src="./js/generate.js"></script>
+  <script src="./js/gallery.js"></script>
+  <script src="./js/export.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
